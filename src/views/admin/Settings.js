@@ -1,19 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 // components
 
-import CardSettings from "components/Cards/CardSettings.js";
-import CardProfile from "components/Cards/CardProfile.js";
+import CardTable from "components/Cards/CardTable.js";
+import api from "api";
+
 
 export default function Settings() {
+  const [data, setData] = React.useState([]);
+
+  useEffect(() => {
+    api.get("/products").then((response) => {
+      console.log(response.data.data)
+      setData(response.data.data)
+    })
+  }, [])
   return (
     <>
-      <div className="flex flex-wrap">
-        <div className="w-full lg:w-8/12 px-4">
-          <CardSettings />
-        </div>
-        <div className="w-full lg:w-4/12 px-4">
-          <CardProfile />
+      <div className="flex flex-wrap mt-4">
+
+        <div className="w-full mb-12 px-4">
+          <CardTable color="dark" name="Lista de Estoque" data={data}/>
         </div>
       </div>
     </>
